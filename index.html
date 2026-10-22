@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Waroeng CITCUT</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">🍜<span>Waroeng<br><b>CITCUT</b></span></div>
+    <a class="nav active" href="#home">⌂ <span>HOME</span></a>
+    <a class="nav" href="#menu">⌕ <span>Search</span></a>
+    <a class="nav" href="#menu">T <span>Text</span></a>
+    <a class="nav" href="#upload">☁ <span>Upload</span></a>
+    <a class="nav" href="#canvas">✎ <span>Canvas</span></a>
+    <a class="nav" href="#download">⇩ <span>Download</span></a>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <h1>Waroeng CITCUT</h1>
+        <p>Makan Enak, Harga Bersahabat</p>
+      </div>
+      <button class="icon-btn" onclick="showPage('profile')"></button>
+    </header>
+
+    <section id="home" class="page active-page">
+      <div class="search">
+        <span>⌕</span>
+        <input id="homeSearch" type="search" placeholder="Cari menu, minuman, dll..." oninput="searchFromHome()">
+      </div>
+
+      <div class="categories">
+        <button class="cat active" onclick="filterMenu('Semua',this)">🍽️ Semua</button>
+        <button class="cat" onclick="filterMenu('Makanan',this)">🍛 Makanan</button>
+        <button class="cat" onclick="filterMenu('Minuman',this)">🥤 Minuman</button>
+      </div>
+
+      <div class="promo">
+        <div>
+          <small>Spesial Hari Ini</small>
+          <h2>Nasi Ayam Crispy</h2>
+          <p>Rasa Juara, Harga Bersahabat</p>
+          <button onclick="openDetail('Nasi Ayam Crispy')">Lihat Menu</button>
+        </div>
+        <div class="promo-food">🍗🍚</div>
+      </div>
+
+      <div class="section-title"><h2>Menu Populer</h2><button onclick="showPage('menu')">Lihat Semua ›</button></div>
+      <div id="popular" class="food-grid"></div>
+    </section>
+
+    <section id="menu" class="page">
+      <div class="section-title"><h2>Menu</h2><span id="resultInfo"></span></div>
+      <div class="search"><span>⌕</span><input id="menuSearch" type="search" placeholder="Cari menu..." oninput="renderMenu()"></div>
+      <div class="categories">
+        <button class="cat active" onclick="filterMenu('Semua',this)">Semua</button>
+        <button class="cat" onclick="filterMenu('Makanan',this)">Makanan</button>
+        <button class="cat" onclick="filterMenu('Minuman',this)">Minuman</button>
+      </div>
+      <div id="menuGrid" class="food-grid"></div>
+    </section>
+
+    <section id="orders" class="page">
+      <div class="section-title"><h2>Pesanan</h2></div>
+      <div id="ordersList"></div>
+    </section>
+
+    <section id="notifications" class="page">
+      <div class="section-title"><h2>Notifikasi</h2></div>
+      <div class="notice"><b>🎉 Promo hari ini</b><p>Nikmati menu spesial Waroeng CITCUT.</p></div>
+      <div class="notice"><b>✅ Selamat datang</b><p>Terima kasih sudah menggunakan aplikasi.</p></div>
+    </section>
+
+    <section id="profile" class="page">
+      <div class="profile-head">
+        <div class="avatar">👤</div>
+        <div><h2 id="profileName">Ghanendra</h2><p id="profileEmail">user123@gmail.com</p></div>
+        <button class="icon-btn">⚙️</button>
+      </div>
+      <div class="stats">
+        <div><b id="orderCount">0</b><span>Pesanan</span></div>
+        <div><b>3</b><span>Favorit</span></div>
+        <div><b id="cartCountProfile">0</b><span>Keranjang</span></div>
+      </div>
+      <div class="profile-menu">
+        <button onclick="showPage('orders')">🧾 <span><b>Riwayat Pesanan</b><small>Lihat pesanan yang pernah dibuat</small></span>›</button>
+        <button>📍 <span><b>Alamat Saya</b><small>Kelola alamat pengiriman</small></span>›</button>
+        <button>💳 <span><b>Metode Pembayaran</b><small>Atur metode pembayaran</small></span>›</button>
+        <button>🔔 <span><b>Notifikasi</b><small>Pengaturan notifikasi aplikasi</small></span>›</button>
+        <button>❓ <span><b>Bantuan & FAQ</b><small>Pertanyaan yang sering diajukan</small></span>›</button>
+        <button>ⓘ <span><b>Tentang Aplikasi</b><small>Versi aplikasi dan informasi lainnya</small></span>›</button>
+      </div>
+      <button id="authBtn" class="logout" onclick="toggleAuth()">Login</button>
+    </section>
+
+    <section id="cart" class="page">
+      <div class="section-title"><h2>Keranjang</h2></div>
+      <div id="cartList"></div>
+      <div class="cart-total"><span>Total</span><b id="cartTotal">Rp 0</b></div>
+      <button class="checkout" onclick="checkout()">Pesan Sekarang</button>
+    </section>
+
+    <div id="detailModal" class="modal">
+      <div class="modal-box"><button class="close" onclick="closeDetail()">×</button><div id="detailContent"></div></div>
+    </div>
+  </main>
+
+  <nav class="bottom-nav">
+    <button onclick="showPage('home')">⌂<span>Beranda</span></button>
+    <button onclick="showPage('orders')">▣<span>Pesanan</span></button>
+    <button class="plus" onclick="showPage('menu')">+</button>
+    <button onclick="showPage('notifications')">♧<span>Notifikasi</span></button>
+    <button onclick="showPage('profile')">♙<span>Pengguna</span></button>
+  </nav>
+
+  <button class="cart-fab" onclick="showPage('cart')">🛒 <span id="cartBadge">0</span></button>
+</div>
+<script src="js/app.js"></script>
+</body>
+</html>
